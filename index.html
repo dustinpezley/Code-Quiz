@@ -12,41 +12,23 @@
 <body>
   <header>
     <a href="./highscores.html">View high scores</a>
-    <div id="time-text">Time: <span id="time">0</span></div>
+    <div class="timer"></div>
   </header>
 
   <main>
-    <div class="container" id="start">
-      <section class="start-page text-body">
-        <h1 class="text-large">Code Quiz Challenge</h1>
-        <p class="text-center text-small" id="start-text">Try to answer the following code-related questions within the time limit. 
-          Keep in mind that incorrect answers will penalize your scoretime by ten seconds!
+    <div class="container">
+      <section class="question-text">
+        <h1>Code Quiz Challenge</h1>
+        <p>Ready to show off your knowledge of all things HTML, CSS, and JavaScript?
+          <br />
+          Answer the following questions and compete for the best time!
         </p>
-        <button type="button" class="btn text-center" id="start-quiz">Start Quiz</button>
-      </section>
-    </div>
-    <div class="container" id="quiz-page">
-      <section class="quiz text-body" id="quiz">
-        <h1 class="text-med" id="question">Test</h1>
-        <div id="choices">
-          <button type="button" class="btn text-left" id="option1">1</button>
-          <button type="button" class="btn text-left" id="option2">2</button>
-          <button type="button" class="btn text-left" id="option3">3</button>
-          <button type="button" class="btn text-left" id="option4">4</button>
+        <p>Remember, incorrect answers will <strong>reduce</strong> your remaining time by <strong>10 seconds</strong>!
+        </p>
+        <div class="answer-choices">
+          <ul id="options"></ul>
         </div>
-        <div id="answer">
-          <p class="answer-eval">Test</p>
-        </div>
-      </section>
-    </div>
-    <div class="container" id="final-score">
-      <section class="score text-body" id="score-entry">
-        <h1 class="text-med">All done!</h1>
-        <p class="input-text text-small">Your final score: <span class="text-small" id="score"></span></p>
-        <div>
-          <p class="input-text text-small">Enter your initials: <input type="text" id="initials"></p>
-          <button type="button" class="btn text-center" id="submit-score">Submit</button>
-        </div>
+        <button id="startQuiz">Start Quiz</button>
       </section>
     </div>
   </main>
