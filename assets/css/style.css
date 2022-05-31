@@ -1,0 +1,147 @@
+:root {
+  --question-font-size: 25px;
+  --btn-background: indigo;
+  --btn-font-color: white;
+}
+
+* {
+  margin: 0;
+  border: 0;
+  font-family:'TW Cen MT', 'Trebuchet MS', Arial, sans-serif;
+}
+
+/* General styling START */
+.btn {
+  background-color: var(--btn-background);
+  color: var(--btn-font-color);
+  border-radius: 0.3em;
+  font-size: 1.5em;
+  padding: 0.2em 0.5em;
+  margin-bottom: 10%;
+}
+
+.text-body {
+  border: 2px red solid;
+  width: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.text-large {
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.text-med {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.text-small {
+  font-size: 1.2em;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+/* General styling END */
+
+/* High score link and timer START */
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 7em 7em 7em;
+}
+
+header a {
+  text-decoration: none;
+  color: var(--answer-background);
+  font-size: 2em;
+}
+
+#time-text {
+  font-size: 2em;
+}
+/* High score and timer END */
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Start screen START */
+.start-page h1 {
+  align-self: center;
+}
+
+#start-text {
+  font-size: 1.2em;
+  margin-bottom: 25px;
+}
+
+.start-page button {
+  align-self: center;
+}
+/* Start screen END */
+
+/* Initial load Start */
+#quiz, #score-entry {
+  display: none;
+}
+/* Initial load END */
+
+/* Quiz START */
+#question {
+  text-align: left;
+}
+
+#choices {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  justify-content: space-between;
+  margin-left: 2%;
+}
+
+.answer-eval {
+  font-size:2em;
+  font-style: italic;
+  color: gray;
+  border-top: 3px grey solid;
+}
+/* Quiz END */
+
+/* Input START */
+.score h1 {
+  margin-bottom: 2%;
+}
+
+.score button {
+  align-self: center;
+}
+
+.score div {
+  display: flex;
+  flex-direction: row;
+}
+
+#submit {
+  margin-left: 5%;
+}
+
+.input-text {
+  margin-bottom: 5%;
+  margin-left: 2%;
+}
+
+#initials {
+  border: 2px black solid;
+  margin-right: 25px;
+}
+/* Input End */
