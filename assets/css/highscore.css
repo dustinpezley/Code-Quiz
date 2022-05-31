@@ -1,0 +1,24 @@
+main {
+  display: flex;
+  justify-content: center;
+}
+
+.high-scores {
+  align-items: center;
+  margin-top: 10em;
+}
+
+#scores{
+  list-style: none;
+}
+
+.score-rank {
+  margin-bottom: 5px;
+  background-color: lightgray;
+  align-self: stretch;
+  padding-left: 5%;
+}
+
+.high-score-btns {
+  margin-top: 25px;
+}
