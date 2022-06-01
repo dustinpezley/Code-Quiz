@@ -91,7 +91,7 @@ header a {
 /* Start screen END */
 
 /* Initial load Start */
-#quiz, #score-entry {
+#quiz-page, #final-score {
   display: none;
 }
 /* Initial load END */

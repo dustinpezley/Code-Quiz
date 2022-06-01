@@ -29,19 +29,157 @@ var questions = [
 
 //Declared variables/page elements
 //Start page elements
-var startEl = document.querySelector("#start");
-var startButtonEl = document.querySelector("#start-quiz");
+var startEl = document.getElementById('start');
+var startButtonEl = document.getElementById('start-quiz');
 
 //Quiz page elements
-var quizEl = document.querySelector("#quiz-page");
-var questionEl = document.querySelector("#question");
-var answerEl = document.querySelector("#answer");
+var quizEl = document.getElementById("quiz-page");
+var questionEl = document.getElementById("question");
+var answerEl = document.getElementById("answer");
+var answerEvalEl = document.getElementById(".answer-eval");
+var choicesEl = document.getElementById("choices");
 
 //Input score elements
-var finalScoreEl = document.querySelector("#final-score");
-var userScoreEl = document.querySelector("#score");
-var initialsEl = document.querySelector("#initials");
-var submitScoreEl = document.querySelector("#submit-score");
+var finalScoreEl = document.getElementById("final-score");
+var userScoreEl = document.getElementById("score");
+var initialsEl = document.getElementById("initials");
+var submitScoreEl = document.getElementById("submit-score");
+
+//Universal elements
+var viewHighScoreEL = document.getElementById("highscore");
+var timerEl = document.getElementById("time");
+var score = 0;
+var highScores = [];
+var timerStart = 75;
+var timeElapsed = 0;
+var interval;
+var currentQuestion = 0;
+
+console.log(questions[0].choices[0]);
+
+//General functions to keep code cleaner
+function hide(element) {
+  element.style.display = "none";
+}
+
+function show(element) {
+  element.style.display = "flex";
+}
+
+function reset() {
+  score = 0;
+  currentQuestion = 0;
+  timeElapsed = 0;
+  timerEl.textContent = 0;
+}
 
 
+//Functions for individual actions
+//Timer
+function startTimer() {
+  timerEl.textContent = timerStart;
+  interval = setInterval(function() {
+    timeElapsed++;
+    timerEl.textContent = timerStart - timeElapsed;
+    if(timeElapsed >= timerStart) {
+      nextQuestion();
+    }
+  },1000);
+}
 
+function stopTimer() {
+  clearInterval(interval);
+}
+
+//Questions
+function displayQuestion() {
+  hide(startEl);
+  show(quizEl);
+  questionEl.textContent=questions[currentQuestion].ask;
+  // document.getElementById("option1").textContent = questions[currentQuestion].choices[0];
+  // document.getElementById("option2").textContent = questions[currentQuestion].choices[1];
+  // document.getElementById("option3").textContent = questions[currentQuestion].choices[2];
+  // document.getElementById("option4").textContent = questions[currentQuestion].choices[3];
+  // for(var i =0;i<choicesEl.children.length;i++) {
+  //   choicesEl.children[i].children[0].textContent = `${i+1}. ${questions[currentQuestion].choices[i]}`; 
+  // }
+  // for (var i=0;i<questions.choices.length;i++) {
+  //   choicesEl[i].textContent = (([i]+1),". ",choicesEl[i]);
+  // }
+  choicesEl.forEach(function(choices) {
+    var choiceButtonEl = document.createElement("button");
+    choiceButtonEl.textContent = choices;
+    choiceButtonEl.addClass("btn text-left");
+    choiceButtonEl.setAttribute("id",arr.indexOf(choices));
+    choiceButtonEl.setAttribute("type", "button");
+  })
+};
+
+function nextQuestion() {
+  currentQuestion++;
+  if(currentQuestion <= questions.length) {
+    displayQuestion();
+  } else {
+    stopTimer();
+      if((timerStart - timeElapsed)>0) {
+        score += (timerStart - timeElapsed);
+        userScoreEl.textContent = score;
+      }
+      hide(quizEl);
+      show(finalScoreEl);
+  }
+}
+
+function checkAnswer(answer) { 
+  if (questions[currentQuestion].answer === answer) {
+    answerEvalEl.textContent = "Correct!";
+    score += 10;
+    setTimeout(nextQuestion(),2000);
+  } else {
+    timeElapsed += 10;
+    answerEvalEl.textContent = "Wrong...";
+    setTimeout(nextQuestion(),2000);
+  }
+}
+
+//High scores
+function showHighScores() {
+  window.location.href = "./highscores.html"
+}
+
+// Start quiz button
+startButtonEl.addEventListener("click",function() {
+  console.log(startEl);
+  hide(startEl);
+  startTimer();
+  displayQuestion();
+  show(quizEl);
+});
+
+//Answer selection
+answerEl.addEventListener("click",function(event) {
+  if(event.target.matches("button")) {
+    checkAnswer(this);
+    nextQuestion();
+  }
+});
+
+//Score submission
+submitScoreEl.addEventListener("click",function() {
+  var initialSubmit = initialsEl.val
+  if(initialSubmit) {
+    var userScore = {username: initialSubmit, score: score};
+    initialsEl.val = '';
+    //check for other user scores in local storage    
+    var scoreStorage = localStorage.getItem("scores");
+    if(!scoreStorage) {
+      return false;
+    } else {
+      highScores = JSON.parse(scoreStorage);
+      highScores.push(userScore);
+    }
+    localStorage.setItem("scores",JSON.stringify(highScores));
+    showHighScores();
+    reset();
+  }
+})
