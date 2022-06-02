@@ -4,18 +4,17 @@ main {
 }
 
 .high-scores {
-  align-items: center;
+  text-align: center;
   margin-top: 10em;
 }
 
-#scores{
-  list-style: none;
+#high-scores-list {
+  text-align: left;
 }
 
 .score-rank {
   margin-bottom: 5px;
   background-color: lightgray;
-  align-self: stretch;
   padding-left: 5%;
 }
 

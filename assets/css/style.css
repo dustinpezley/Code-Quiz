@@ -15,32 +15,33 @@
   background-color: var(--btn-background);
   color: var(--btn-font-color);
   border-radius: 0.3em;
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 0.2em 0.5em;
   margin-bottom: 10%;
 }
 
 .text-body {
-  border: 2px red solid;
-  width: 35%;
+  /* border: 2px red solid; */
+  width: 45%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
 }
 
 .text-large {
-  font-size: 3em;
+  font-size: 2.2em;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
 .text-med {
-  font-size: 2.5em;
+  font-size: 1.5em;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .text-small {
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .text-left {
@@ -62,11 +63,11 @@ header {
 header a {
   text-decoration: none;
   color: var(--answer-background);
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 #time-text {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 /* High score and timer END */
 
@@ -109,8 +110,8 @@ header a {
   margin-left: 2%;
 }
 
-.answer-eval {
-  font-size:2em;
+#answer-eval {
+  font-size:1.2em;
   font-style: italic;
   color: gray;
   border-top: 3px grey solid;
@@ -122,16 +123,17 @@ header a {
   margin-bottom: 2%;
 }
 
-.score button {
-  align-self: center;
-}
-
 .score div {
   display: flex;
   flex-direction: row;
 }
 
-#submit {
+.score div button {
+  align-self: center;
+}
+
+#submit-score {
+  font-size: 1.2em;
   margin-left: 5%;
 }
 

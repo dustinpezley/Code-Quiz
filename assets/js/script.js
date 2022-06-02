@@ -36,7 +36,7 @@ var startButtonEl = document.getElementById('start-quiz');
 var quizEl = document.getElementById("quiz-page");
 var questionEl = document.getElementById("question");
 var answerEl = document.getElementById("answer");
-var answerEvalEl = document.getElementById(".answer-eval");
+var answerEvalEl = document.getElementById("answer-eval");
 var choicesEl = document.getElementById("choices");
 
 //Input score elements
@@ -55,7 +55,7 @@ var timeElapsed = 0;
 var interval;
 var currentQuestion = 0;
 
-console.log(questions[0].choices[0]);
+console.log(questions[currentQuestion].choices);
 
 //General functions to keep code cleaner
 function hide(element) {
@@ -81,8 +81,11 @@ function startTimer() {
   interval = setInterval(function() {
     timeElapsed++;
     timerEl.textContent = timerStart - timeElapsed;
-    if(timeElapsed >= timerStart) {
-      nextQuestion();
+    if(timeElapsed > timerStart) {
+      clearInterval(interval);
+      hide(quizEl);
+      show(finalScoreEl);
+      timerEl.textContent = 0;
     }
   },1000);
 }
@@ -96,28 +99,24 @@ function displayQuestion() {
   hide(startEl);
   show(quizEl);
   questionEl.textContent=questions[currentQuestion].ask;
-  // document.getElementById("option1").textContent = questions[currentQuestion].choices[0];
-  // document.getElementById("option2").textContent = questions[currentQuestion].choices[1];
-  // document.getElementById("option3").textContent = questions[currentQuestion].choices[2];
-  // document.getElementById("option4").textContent = questions[currentQuestion].choices[3];
-  // for(var i =0;i<choicesEl.children.length;i++) {
-  //   choicesEl.children[i].children[0].textContent = `${i+1}. ${questions[currentQuestion].choices[i]}`; 
-  // }
-  // for (var i=0;i<questions.choices.length;i++) {
-  //   choicesEl[i].textContent = (([i]+1),". ",choicesEl[i]);
-  // }
-  choicesEl.forEach(function(choices) {
-    var choiceButtonEl = document.createElement("button");
-    choiceButtonEl.textContent = choices;
-    choiceButtonEl.addClass("btn text-left");
-    choiceButtonEl.setAttribute("id",arr.indexOf(choices));
-    choiceButtonEl.setAttribute("type", "button");
+  var userChoices = questions[currentQuestion].choices;
+  choicesEl.innerHTML=""
+  userChoices.forEach(function (newItem) {
+    var button = document.createElement("button");
+    button.textContent = newItem;
+    button.setAttribute("type","button");
+    button.classList.add("btn");
+    button.classList.add("text-left");
+    choicesEl.appendChild(button);
+    button.addEventListener("click",(checkAnswer));
   })
 };
 
 function nextQuestion() {
   currentQuestion++;
-  if(currentQuestion <= questions.length) {
+  answerEvalEl.textContent = ""
+  if(currentQuestion < questions.length) {
+    // setTimeout(displayQuestion(),3000);
     displayQuestion();
   } else {
     stopTimer();
@@ -128,58 +127,63 @@ function nextQuestion() {
       hide(quizEl);
       show(finalScoreEl);
   }
-}
+};
 
-function checkAnswer(answer) { 
-  if (questions[currentQuestion].answer === answer) {
-    answerEvalEl.textContent = "Correct!";
+//Answer selection
+answerEl.addEventListener("click",function(event) {
+  checkAnswer(event);
+});
+
+function checkAnswer(event) {
+  if(event.target.matches("button") && event.target.textContent === questions[currentQuestion].answer) {
     score += 10;
-    setTimeout(nextQuestion(),2000);
+    answerEvalEl.textContent = `Correct! The answer is: ${questions[currentQuestion].answer}.`;
   } else {
     timeElapsed += 10;
-    answerEvalEl.textContent = "Wrong...";
-    setTimeout(nextQuestion(),2000);
+    answerEvalEl.textContent = `Wrong.... The correct answer is: ${questions[currentQuestion].answer}.`;
   }
-}
+
+  if (currentQuestion >= questions.length) {
+    hide(quizEl);
+    show(finalScoreEl);
+    stopTimer();
+  } else {
+    setTimeout(nextQuestion,1500);
+  }
+};
 
 //High scores
 function showHighScores() {
-  window.location.href = "./highscores.html"
+  window.location.href = "./highscores.html";
 }
 
 // Start quiz button
 startButtonEl.addEventListener("click",function() {
-  console.log(startEl);
   hide(startEl);
   startTimer();
   displayQuestion();
   show(quizEl);
 });
 
-//Answer selection
-answerEl.addEventListener("click",function(event) {
-  if(event.target.matches("button")) {
-    checkAnswer(this);
-    nextQuestion();
-  }
-});
-
 //Score submission
 submitScoreEl.addEventListener("click",function() {
-  var initialSubmit = initialsEl.val
-  if(initialSubmit) {
-    var userScore = {username: initialSubmit, score: score};
-    initialsEl.val = '';
-    //check for other user scores in local storage    
-    var scoreStorage = localStorage.getItem("scores");
-    if(!scoreStorage) {
-      return false;
+  var initials = initialsEl.value;
+  if (!initials) {
+    alert("Please enter your initials to continue!");
+  } else {
+    var scoreObject = {initials: initials, score: score};
+    initials = "";
+
+    var highScores = localStorage.getItem("highScores");
+    if (!highScores) {
+      highScores =[];
     } else {
-      highScores = JSON.parse(scoreStorage);
-      highScores.push(userScore);
+      highScores = JSON.parse(highScores);
     }
-    localStorage.setItem("scores",JSON.stringify(highScores));
-    showHighScores();
-    reset();
+    highScores.push(scoreObject);
+    var newScoreSet = JSON.stringify(highScores);
+    localStorage.setItem("highScores",newScoreSet);
+
+    window.location.replace("./highscores.html");
   }
-})
+});
