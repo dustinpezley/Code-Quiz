@@ -55,8 +55,6 @@ var timeElapsed = 0;
 var interval;
 var currentQuestion = 0;
 
-console.log(questions[currentQuestion].choices);
-
 //General functions to keep code cleaner
 function hide(element) {
   element.style.display = "none";
@@ -120,10 +118,10 @@ function nextQuestion() {
     displayQuestion();
   } else {
     stopTimer();
-      if((timerStart - timeElapsed)>0) {
-        score += (timerStart - timeElapsed);
-        userScoreEl.textContent = score;
-      }
+      // if((timerStart - timeElapsed)>0) {
+      //   score += (timerStart - timeElapsed);
+      //   userScoreEl.textContent = score;
+      // }
       hide(quizEl);
       show(finalScoreEl);
   }
@@ -143,7 +141,9 @@ function checkAnswer(event) {
     answerEvalEl.textContent = `Wrong.... The correct answer is: ${questions[currentQuestion].answer}.`;
   }
 
-  if (currentQuestion >= questions.length) {
+  userScoreEl.textContent = score;
+
+  if (currentQuestion >= questions.length || (timerStart - timeElapsed)<0) {
     hide(quizEl);
     show(finalScoreEl);
     stopTimer();
