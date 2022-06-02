@@ -114,14 +114,13 @@ function nextQuestion() {
   currentQuestion++;
   answerEvalEl.textContent = ""
   if(currentQuestion < questions.length) {
-    // setTimeout(displayQuestion(),3000);
     displayQuestion();
   } else {
     stopTimer();
-      // if((timerStart - timeElapsed)>0) {
-      //   score += (timerStart - timeElapsed);
-      //   userScoreEl.textContent = score;
-      // }
+      if((timerStart - timeElapsed)>0) {
+        score += (timerStart - timeElapsed);
+        userScoreEl.textContent = score;
+      }
       hide(quizEl);
       show(finalScoreEl);
   }
@@ -141,7 +140,9 @@ function checkAnswer(event) {
     answerEvalEl.textContent = `Wrong.... The correct answer is: ${questions[currentQuestion].answer}.`;
   }
 
-  userScoreEl.textContent = score;
+  if(timeElapsed>timerStart) {
+    userScoreEl.textContent = score;
+  }
 
   if (currentQuestion >= questions.length || (timerStart - timeElapsed)<0) {
     hide(quizEl);
