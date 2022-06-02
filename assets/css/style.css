@@ -120,21 +120,26 @@ header a {
 
 /* Input START */
 .score h1 {
-  margin-bottom: 2%;
+  margin-bottom: 20px;
 }
 
 .score div {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .score div button {
   align-self: center;
 }
 
+.score div p {
+  margin-left: 2%;
+}
+
 #submit-score {
   font-size: 1.2em;
-  margin-left: 5%;
+  margin: auto;
 }
 
 .input-text {
