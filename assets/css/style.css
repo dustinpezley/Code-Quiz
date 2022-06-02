@@ -63,11 +63,11 @@ header {
 header a {
   text-decoration: none;
   color: var(--answer-background);
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 #time-text {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 /* High score and timer END */
 
